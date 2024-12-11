@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./vendor/@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./vendor/@openzeppelin/contracts/access/Ownable.sol";
+
 
 contract Staking is Ownable {
     IERC20 public stakingToken;
@@ -40,7 +41,7 @@ contract Staking is Ownable {
         require(_amount > 0, "Amount must be greater than zero");
         updatePool();
 
-        StakeInfo storage userStake = stakes[msg.sender]; // Zmieniono nazwę zmiennej
+        StakeInfo storage userStake = stakes[msg.sender];
         if (userStake.amount > 0) {
             uint256 pending = (userStake.amount * accRewardPerToken) / 1e18 - userStake.rewardDebt;
             stakingToken.transfer(msg.sender, pending);
@@ -55,7 +56,7 @@ contract Staking is Ownable {
     function withdraw(uint256 _amount) external {
         require(_amount > 0, "Amount must be greater than zero");
 
-        StakeInfo storage userStake = stakes[msg.sender]; // Zmieniono nazwę zmiennej
+        StakeInfo storage userStake = stakes[msg.sender]; 
         require(userStake.amount >= _amount, "Insufficient staked amount");
 
         updatePool();
@@ -71,7 +72,7 @@ contract Staking is Ownable {
     }
 
     function pendingRewards(address _user) external view returns (uint256) {
-        StakeInfo storage userStake = stakes[_user]; // Zmieniono nazwę zmiennej
+        StakeInfo storage userStake = stakes[_user]; 
         uint256 _accRewardPerToken = accRewardPerToken;
         if (totalStaked > 0) {
             uint256 blocks = block.number - lastRewardBlock;

@@ -11,7 +11,7 @@ async function main() {
 
   // Deploy MyToken
   const MyToken = await ethers.getContractFactory("MyToken");
-  const myToken = await MyToken.deploy(1000000); // Początkowa podaż
+  const myToken = await MyToken.deploy(1000000); 
   await myToken.waitForDeployment();
   console.log("MyToken deployed to:", await myToken.getAddress());
 }
